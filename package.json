@@ -1,0 +1,55 @@
+{
+  "name": "clean-architecture-scaffolding",
+  "displayName": "Clean Architecture Scaffolding",
+  "description": "Generate folder structure for features in a flutter projects",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.70.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onCommand:clean-architecture-scaffolding.createNewFeature"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "menus": {
+      "explorer/context": [
+        {
+          "when": "explorerResourceIsFolder && dart-code:anyFlutterProjectLoaded && dart-code:isRunningLocally",
+          "command": "clean-architecture-scaffolding.createNewFeature",
+          "group": "clean_architecture_scaffolding"
+          
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "clean-architecture-scaffolding.createNewFeature",
+        "title": "Clean Arch: New Feature"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.70.0",
+    "@types/glob": "^7.2.0",
+    "@types/mocha": "^9.1.1",
+    "@types/node": "16.x",
+    "@typescript-eslint/eslint-plugin": "^5.31.0",
+    "@typescript-eslint/parser": "^5.31.0",
+    "eslint": "^8.20.0",
+    "glob": "^8.0.3",
+    "mocha": "^10.0.0",
+    "typescript": "^4.7.4",
+    "@vscode/test-electron": "^2.1.5"
+  }
+}
