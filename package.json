@@ -1,13 +1,31 @@
 {
   "name": "clean-architecture-scaffolding",
   "displayName": "Clean Architecture Scaffolding",
-  "description": "Generate folder structure for features in a flutter projects",
+  "description": "Generate folder structure for features in Flutter projects",
+  "publisher": "euclidesgc",
+  "homepage": "https://www.linkedin.com/in/euclidesgc/",
+  "author": {
+    "name": "Euclides Guedes Catunda",
+    "email": "euclides.catunda@gmail.com",
+    "url": "https://www.linkedin.com/in/euclidesgc/"
+  },
   "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/euclidesgc/clean-architecture-scaffolding"
+  },
   "engines": {
     "vscode": "^1.70.0"
   },
   "categories": [
+    "Snippets",
     "Other"
+  ],
+  "keywords": [
+    "dart",
+    "flutter",
+    "clean architecture",
+    "clean arch"
   ],
   "activationEvents": [
     "onCommand:clean-architecture-scaffolding.createNewFeature"
@@ -37,7 +55,7 @@
           "scaffolding.layers.test": {
             "type": "boolean",
             "default": true,
-            "description": "create same structure for test folder"
+            "description": "Create the same structure for the test folder"
           }
         }
       }
@@ -54,7 +72,7 @@
     "commands": [
       {
         "command": "clean-architecture-scaffolding.createNewFeature",
-        "title": "Clean Arch: New Feature"
+        "title": "New Feature"
       }
     ]
   },
