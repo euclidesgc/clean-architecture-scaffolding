@@ -24,52 +24,47 @@ export function activate(context: vscode.ExtensionContext) {
         return;
       }
 
-      let folderList = [];
-      let tempPath = "";
+      const customFolder = uri.fsPath;
 
       // /Users/colaborador/development/grupo_boticario/beleza_app/lib
-      const rootFolder = uri.fsPath;
+      let indexOfLibFolder = customFolder.indexOf("/lib", 0);
+      const rootFolder = customFolder.substring(0, indexOfLibFolder) + "/lib";
 
-      // /Users/colaborador/development/grupo_boticario/beleza_app/test
-      const testFolder = uri.fsPath.replace(
-        new RegExp("\\b" + "/lib" + "\\b"),
-        "/test"
-      );
+      let folderList = vscode.workspace
+        .getConfiguration("scaffolding")
+        .get("layers.templates");
 
-      //domain
-      tempPath = `${userFeatureName}/domain/entities/`;
-      folderList.push(tempPath);
-      tempPath = `${userFeatureName}/domain/usecases/`;
-      folderList.push(tempPath);
-      tempPath = `${userFeatureName}/domain/errors/`;
-      folderList.push(tempPath);
-      tempPath = `${userFeatureName}/domain/repositories/`;
-      folderList.push(tempPath);
+      let makeTestFolder = vscode.workspace
+        .getConfiguration("scaffolding")
+        .get("layers.test");
 
-      //infra
-      tempPath = `${userFeatureName}/infra/datasources/`;
-      folderList.push(tempPath);
-      tempPath = `${userFeatureName}/infra/repositories/`;
-      folderList.push(tempPath);
+      if (folderList && Array.isArray(folderList)) {
+        try {
+          let featureFolder = "";
 
-      //external
-      tempPath = `${userFeatureName}/external/datasources/`;
-      folderList.push(tempPath);
-      tempPath = `${userFeatureName}/external/models`;
-      folderList.push(tempPath);
+          folderList.forEach((element) => {
+            featureFolder = element.replaceAll("{root_folder}", rootFolder);
+            featureFolder = featureFolder.replaceAll(
+              "{custom_folder}",
+              customFolder
+            );
+            featureFolder = featureFolder.replaceAll(
+              "{feature_name}",
+              userFeatureName
+            );
 
-      //presenter
-      tempPath = `${userFeatureName}/presenter/pages/`;
-      folderList.push(tempPath);
+            const testFeatureFolder = featureFolder.replace("/lib", "/test");
 
-      try {
-        folderList.forEach((element) => {
-          fs.mkdirSync(`${rootFolder}\/${element}`, { recursive: true });
-          fs.mkdirSync(`${testFolder}\/${element}`, { recursive: true });
-        });
-      } catch (err) {
-        console.log("Error", err);
-        throw err;
+            fs.mkdirSync(featureFolder, { recursive: true });
+
+            if (makeTestFolder) {
+              fs.mkdirSync(testFeatureFolder, { recursive: true });
+            }
+          });
+        } catch (err) {
+          console.log("Error", err);
+          throw err;
+        }
       }
     }
   );
