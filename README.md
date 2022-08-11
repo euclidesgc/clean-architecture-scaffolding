@@ -9,12 +9,11 @@ Right-click on any folder in your project and then click "Clean Arch Scaffolding
 Enter the name of your new feature and the directories will be created according to the template defined in the settings.
 
 For example if there is an image subfolder under your extension project workspace:
-![](images/folders.png)
-![Clean Arch Scaffolding > New Feature] (images/menu.png)
-![Give a feature name] (images/feature_name.png)
-![The folders will be created] (images/folders.png)
-![Like this default settings] (images/settings.png)
-![Using this folders templates] (images/json.png)
+![Clean Arch Scaffolding > New Feature](images/menu.png)
+![Give a feature name](images/feature_name.png)
+![The folders will be created](images/folders.png)
+![Like this default settings](images/settings.png)
+![Using this folders templates](images/json.png)
 
 ## Extension Settings
 
