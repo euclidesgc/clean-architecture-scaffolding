@@ -10,7 +10,7 @@ Enter the name of your new feature and the directories will be created according
 
 For example if there is an image subfolder under your extension project workspace:
 
-\!\[Clean Arch Scaffolding > New Feature\]\(images/menu.png\)
+\[Clean Arch Scaffolding > New Feature\]\(images/menu.png\)
 \!\[Give a feature name\]\(images/feature_name.png\)
 \!\[The folders will be created\]\(images/folders.png\)
 \!\[Like this default settings\]\(images/settings.png\)
