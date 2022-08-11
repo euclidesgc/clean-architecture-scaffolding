@@ -72,7 +72,7 @@
     "commands": [
       {
         "command": "clean-architecture-scaffolding.createNewFeature",
-        "title": "New Feature"
+        "title": "Clean Arch Scaffolding > New Feature"
       }
     ]
   },
