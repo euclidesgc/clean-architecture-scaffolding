@@ -14,13 +14,40 @@
   ],
   "main": "./out/extension.js",
   "contributes": {
+    "configuration": [
+      {
+        "title": "Clean Architecture Scaffolding",
+        "properties": {
+          "scaffolding.layers.templates": {
+            "type": "array",
+            "default": [
+              "{custom_folder}/{feature_name}/domain/usecases/",
+              "{custom_folder}/{feature_name}/domain/entities/",
+              "{custom_folder}/{feature_name}/domain/repositories/",
+              "{custom_folder}/{feature_name}/domain/errors/",
+              "{custom_folder}/{feature_name}/data/datasources/",
+              "{custom_folder}/{feature_name}/data/models/",
+              "{custom_folder}/{feature_name}/data/repositories/",
+              "{custom_folder}/{feature_name}/presentation/pages/",
+              "{custom_folder}/{feature_name}/presentation/pages/widgets",
+              "{custom_folder}/{feature_name}/presentation/pages/{feature_name}_bloc"
+            ],
+            "markdownDescription": "#### **An array os string with the templates of your layers.**\nYou can use some keywords to indicates special locations:\n- **{root_folder}** to '/lib';\n- **{custom_folder}** to clicked folder;\n- **{feature_name}** to use the given custom name. \n\n\nEx: '{root_folder}/{feature_name}/domain/usecases/'"
+          },
+          "scaffolding.layers.test": {
+            "type": "boolean",
+            "default": true,
+            "description": "create same structure for test folder"
+          }
+        }
+      }
+    ],
     "menus": {
       "explorer/context": [
         {
           "when": "explorerResourceIsFolder && dart-code:anyFlutterProjectLoaded && dart-code:isRunningLocally",
           "command": "clean-architecture-scaffolding.createNewFeature",
           "group": "clean_architecture_scaffolding"
-          
         }
       ]
     },
