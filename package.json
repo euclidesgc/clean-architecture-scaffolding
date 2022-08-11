@@ -39,14 +39,14 @@
           "scaffolding.layers.templates": {
             "type": "array",
             "default": [
-              "{custom_folder}/{feature_name}/domain/usecases/",
-              "{custom_folder}/{feature_name}/domain/entities/",
-              "{custom_folder}/{feature_name}/domain/repositories/",
-              "{custom_folder}/{feature_name}/domain/errors/",
-              "{custom_folder}/{feature_name}/data/datasources/",
-              "{custom_folder}/{feature_name}/data/models/",
-              "{custom_folder}/{feature_name}/data/repositories/",
-              "{custom_folder}/{feature_name}/presentation/pages/",
+              "{custom_folder}/{feature_name}/domain/usecases",
+              "{custom_folder}/{feature_name}/domain/entities",
+              "{custom_folder}/{feature_name}/domain/repositories",
+              "{custom_folder}/{feature_name}/domain/errors",
+              "{custom_folder}/{feature_name}/data/datasources",
+              "{custom_folder}/{feature_name}/data/models",
+              "{custom_folder}/{feature_name}/data/repositories",
+              "{custom_folder}/{feature_name}/presentation/pages",
               "{custom_folder}/{feature_name}/presentation/pages/widgets",
               "{custom_folder}/{feature_name}/presentation/pages/{feature_name}_bloc"
             ],

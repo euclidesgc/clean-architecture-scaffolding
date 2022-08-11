@@ -4,15 +4,25 @@ It generates a folder structure according to your own template.
 Take a look at the settings page.
 
 ## Features
-
+ 
 Right-click on any folder in your project and then click "Clean Arch Scaffolding > New Feature".
-Enter the name of your new feature and the directories will be created according to the template defined in the settings.
-
-For example if there is an image subfolder under your extension project workspace:
 ![Clean Arch Scaffolding > New Feature](images/menu.png)
+
+Enter the name of your new feature
 ![Give a feature name](images/feature_name.png)
+
+The directories will be created according to the template defined in the settings.
 ![The folders will be created](images/folders.png)
+
+If you want to adapt the template, go to the extension settings and edit the json with the templates.
 ![Like this default settings](images/settings.png)
+
+You can use some keywords to indicates special locations:<br/>
+- **{root_folder}** to '/lib';<br/>
+- **{custom_folder}** to clicked folder;<br/>
+- **{feature_name}** to use the given custom name.<br/>
+**Ex:** '{root_folder}/{feature_name}/domain/usecases/'
+
 ![Using this folders templates](images/json.png)
 
 ## Extension Settings
