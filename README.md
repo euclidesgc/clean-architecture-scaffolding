@@ -24,12 +24,6 @@ You can use some keywords to indicates special locations:<br/>
 
 ## Extension Settings
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
-
-For example:
-
-This extension contributes the following settings:
-
 * `scaffolding.layers.templates`: Array of strings with folder template definitions.
 * `scaffolding.layers.test`: Check to create the same structure in test folder too.
 
@@ -38,10 +32,5 @@ This extension contributes the following settings:
 This initial version generates only the folders.
 In the next versions we will also add some file templates according to the context of the clicked folder.
 
-## Following extension guidelines
-
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
-
-* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
 
 **Enjoy!**
