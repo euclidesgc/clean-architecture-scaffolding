@@ -1,6 +1,5 @@
 import { mkdirSync } from "fs";
 import { Uri, window, workspace } from "vscode";
-import { promptForUser } from "./utils";
 
 export async function createFolders(uri: Uri) {
   const userFeatureName = await window.showInputBox({

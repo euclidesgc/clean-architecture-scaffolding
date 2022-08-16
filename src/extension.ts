@@ -1,6 +1,6 @@
 import * as vscode from "vscode";
-import { createFolders } from "./create_folders";
-import { createUsecase } from "./create_usecase";
+import { createFolders } from "./commands/create_folders";
+import { createUsecase } from "./commands/create_usecase";
 
 export function activate(context: vscode.ExtensionContext) {
   console.log(
@@ -8,7 +8,7 @@ export function activate(context: vscode.ExtensionContext) {
   );
 
   vscode.commands.registerCommand(
-    "clean-architecture-scaffolding.createNewFeature",
+    "clean-architecture-scaffolding.createFolders",
     async (uri: vscode.Uri) => {
       await createFolders(uri);
     }

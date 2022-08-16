@@ -1,7 +1,7 @@
 {
   "name": "clean-architecture-scaffolding",
   "displayName": "Clean Architecture Scaffolding",
-  "description": "Generate folder structure for features in Flutter projects",
+  "description": "Generate folder structure and files for features in Flutter projects in accord with your custom templates",
   "publisher": "euclidesgc",
   "icon": "icon.png",
   "homepage": "https://www.linkedin.com/in/euclidesgc/",
@@ -29,7 +29,7 @@
     "clean arch"
   ],
   "activationEvents": [
-    "onCommand:clean-architecture-scaffolding.createNewFeature",
+    "onCommand:clean-architecture-scaffolding.createFolders",
     "onCommand:clean-architecture-scaffolding.createUsecase"
   ],
   "main": "./out/extension.js",
@@ -67,7 +67,7 @@
       "explorer/context": [
         {
           "when": "explorerResourceIsFolder && dart-code:anyFlutterProjectLoaded && dart-code:isRunningLocally",
-          "command": "clean-architecture-scaffolding.createNewFeature",
+          "command": "clean-architecture-scaffolding.createFolders",
           "group": "clean_architecture_scaffolding"
         },
         {
@@ -79,12 +79,12 @@
     },
     "commands": [
       {
-        "command": "clean-architecture-scaffolding.createNewFeature",
-        "title": "Clean Arch Scaffolding > New Feature"
+        "command": "clean-architecture-scaffolding.createFolders",
+        "title": "Clean Arch Scaffolding -> Create Folders"
       },
       {
         "command": "clean-architecture-scaffolding.createUsecase",
-        "title": "Clean Arch Scaffolding > New Usecase"
+        "title": "Clean Arch Scaffolding -> New Usecase"
       }
     ]
   },

@@ -1,4 +1,5 @@
 import * as vscode from "vscode";
+import { PromptOptions } from "./PromptOptions";
 
 export function validateFeatureName(featureName?: string): boolean {
   return !featureName || featureName?.includes(" ");
@@ -7,7 +8,6 @@ export function validateFeatureName(featureName?: string): boolean {
 export function promptForUser(
   options: PromptOptions
 ): Thenable<string | undefined> {
-
   const option: vscode.InputBoxOptions = {
     prompt: options.prompt,
     placeHolder: options.placeHolder,
@@ -16,11 +16,4 @@ export function promptForUser(
   };
 
   return vscode.window.showInputBox(option);
-}
-
-interface PromptOptions {
-  title?: string;
-  prompt?: string;
-  placeHolder?: string;
-  value?: string;
 }
