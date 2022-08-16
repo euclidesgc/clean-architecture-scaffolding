@@ -29,7 +29,8 @@
     "clean arch"
   ],
   "activationEvents": [
-    "onCommand:clean-architecture-scaffolding.createNewFeature"
+    "onCommand:clean-architecture-scaffolding.createNewFeature",
+    "onCommand:clean-architecture-scaffolding.createUsecase"
   ],
   "main": "./out/extension.js",
   "contributes": {
@@ -40,15 +41,16 @@
           "scaffolding.layers.templates": {
             "type": "array",
             "default": [
-              "{custom_folder}/{feature_name}/domain/usecases",
-              "{custom_folder}/{feature_name}/domain/entities",
-              "{custom_folder}/{feature_name}/domain/repositories",
-              "{custom_folder}/{feature_name}/domain/errors",
-              "{custom_folder}/{feature_name}/data/datasources",
-              "{custom_folder}/{feature_name}/data/models",
-              "{custom_folder}/{feature_name}/data/repositories",
-              "{custom_folder}/{feature_name}/presentation/pages",
-              "{custom_folder}/{feature_name}/presentation/pages/widgets",
+              "{custom_folder}/{feature_name}/domain/usecases/usecase_interface.template",
+              "{custom_folder}/{feature_name}/domain/usecases/usecase_imp.template",
+              "{custom_folder}/{feature_name}/domain/entities/",
+              "{custom_folder}/{feature_name}/domain/repositories/",
+              "{custom_folder}/{feature_name}/domain/errors/",
+              "{custom_folder}/{feature_name}/data/datasources/",
+              "{custom_folder}/{feature_name}/data/models/",
+              "{custom_folder}/{feature_name}/data/repositories/",
+              "{custom_folder}/{feature_name}/presentation/pages/",
+              "{custom_folder}/{feature_name}/presentation/pages/widgets/",
               "{custom_folder}/{feature_name}/presentation/pages/{feature_name}_bloc"
             ],
             "markdownDescription": "#### **An array os string with the templates of your layers.**\nYou can use some keywords to indicates special locations:\n- **{root_folder}** to '/lib';\n- **{custom_folder}** to clicked folder;\n- **{feature_name}** to use the given custom name. \n\n\nEx: '{root_folder}/{feature_name}/domain/usecases/'"
@@ -67,6 +69,11 @@
           "when": "explorerResourceIsFolder && dart-code:anyFlutterProjectLoaded && dart-code:isRunningLocally",
           "command": "clean-architecture-scaffolding.createNewFeature",
           "group": "clean_architecture_scaffolding"
+        },
+        {
+          "when": "explorerResourceIsFolder && dart-code:anyFlutterProjectLoaded && dart-code:isRunningLocally && resourcePath =~ /.*([uU][sS][eE][-_]*[cC][aA][sS][eE][sS]?)$/",
+          "command": "clean-architecture-scaffolding.createUsecase",
+          "group": "clean_architecture_scaffolding"
         }
       ]
     },
@@ -74,6 +81,10 @@
       {
         "command": "clean-architecture-scaffolding.createNewFeature",
         "title": "Clean Arch Scaffolding > New Feature"
+      },
+      {
+        "command": "clean-architecture-scaffolding.createUsecase",
+        "title": "Clean Arch Scaffolding > New Usecase"
       }
     ]
   },
@@ -86,16 +97,19 @@
     "test": "node ./out/test/runTest.js"
   },
   "devDependencies": {
-    "@types/vscode": "^1.70.0",
     "@types/glob": "^7.2.0",
     "@types/mocha": "^9.1.1",
     "@types/node": "16.x",
+    "@types/vscode": "^1.70.0",
     "@typescript-eslint/eslint-plugin": "^5.31.0",
     "@typescript-eslint/parser": "^5.31.0",
+    "@vscode/test-electron": "^2.1.5",
     "eslint": "^8.20.0",
     "glob": "^8.0.3",
     "mocha": "^10.0.0",
-    "typescript": "^4.7.4",
-    "@vscode/test-electron": "^2.1.5"
+    "typescript": "^4.7.4"
+  },
+  "dependencies": {
+    "change-case": "^4.1.2"
   }
 }
