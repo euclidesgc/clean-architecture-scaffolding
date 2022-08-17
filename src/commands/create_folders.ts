@@ -32,13 +32,13 @@ export async function createFolders(uri: Uri) {
       let featureFolder = "";
 
       folderList.forEach((element) => {
-        featureFolder = element.replaceAll("{root_folder}", rootFolder);
+        featureFolder = element.replaceAll("{{root_folder}}", rootFolder);
         featureFolder = featureFolder.replaceAll(
-          "{custom_folder}",
+          "{{custom_folder}}",
           customFolder
         );
         featureFolder = featureFolder.replaceAll(
-          "{feature_name}",
+          "{{feature_name}}",
           userFeatureName
         );
 
@@ -60,4 +60,5 @@ export async function createFolders(uri: Uri) {
       throw err;
     }
   }
+
 }

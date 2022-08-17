@@ -1,20 +1,20 @@
 import { pascalCase, snakeCase } from "change-case";
-import { readFileSync } from "fs";
+import { readFileSync, writeFile } from "fs";
 import { Uri, window, workspace } from "vscode";
 import { promptForUser } from "../utils/tools";
 
 export async function createUsecase(uri: Uri) {
   const customFolder = uri.fsPath;
   const indexOfLibFolder = customFolder.indexOf("/lib", 0);
-  const rootFolder = customFolder.substring(0, indexOfLibFolder) + "/lib";
+  // const rootFolder = customFolder.substring(0, indexOfLibFolder) + "/lib";
 
   const folderList = workspace
     .getConfiguration("scaffolding")
     .get("layers.templates");
 
-  const makeTestFolder = workspace
-    .getConfiguration("scaffolding")
-    .get("layers.test");
+  // const makeTestFolder = workspace
+  //   .getConfiguration("scaffolding")
+  //   .get("layers.test");
 
   const usecaseName = await promptForUser({
     title: "Create usecase",
@@ -30,12 +30,12 @@ export async function createUsecase(uri: Uri) {
   }
 
   if (folderList && Array.isArray(folderList)) {
+
     const templatesList = folderList.filter((element) => {
       return element.endsWith(".template");
     });
 
     try {
-      let featureFolder = "";
       let templatesMap = new Map<string, string>();
 
       templatesList.forEach(async (element: string) => {
@@ -47,22 +47,20 @@ export async function createUsecase(uri: Uri) {
         // element      =                                            '{custom_folder}/{feature_name}/domain/usecases/usecase_interface.template'
         // customFolder = '/Users/colaborador/development/grupo_boticario/menu/lib/src/login_feature/domain/usecases'
 
-        const useCaseFileName = `${customFolder}/${snakeCase(usecaseName)}_usecase.dart`;
-          
+        const useCaseFileName = `${customFolder}/${
+          templateFileNameWithExtension.replaceAll('{{usecase_name}}', snakeCase(usecaseName)).replace('.template', '.dart')}`;
 
-        let templateFilePath = `${customFolder.substring(
+        let templateFile = `${customFolder.substring(
           0,
           indexOfLibFolder
         )}/.my_templates/${templateFileNameWithExtension}`;
 
-        let templateContent = readFileSync(templateFilePath, "utf8");
+        let templateContent = readFileSync(templateFile, "utf8");
 
         if (templateContent && templateContent !== null) {
           templatesMap.set(useCaseFileName, templateContent);
         }
       });
-
-      console.log(templatesMap);
 
       if (templatesMap) {
         templatesMap.forEach((value, key) => {
@@ -70,24 +68,25 @@ export async function createUsecase(uri: Uri) {
           let content = value;
 
           content = content.replaceAll(
-            `{informedUseCaseName.pascalCase}`,
+            `{{usecase_name.pascalCase}}`,
             pascalCase(usecaseName)
           );
           content = content.replaceAll(
-            `{informedUseCaseName.snakeCase}`,
+            `{{usecase_name.snakeCase}}`,
             snakeCase(usecaseName)
           );
 
           templatesMap.set(key, content);
-          //grava aquivo na pasta correta
-        });
 
-        //este arquivo deve ser gravado no local correto
-        console.log(templatesMap);
+          //grava aquivo na pasta correta
+          writeFile(key, content, "utf8", (error) => {
+            console.log("Error", error);
+          });
+        });
       }
-    } catch (err) {
-      console.log("Error", err);
-      throw err;
+    } catch (error) {
+      console.log("Error", error);
+      throw error;
     }
   }
 }

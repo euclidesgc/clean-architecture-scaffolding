@@ -41,8 +41,8 @@
           "scaffolding.layers.templates": {
             "type": "array",
             "default": [
-              "{custom_folder}/{feature_name}/domain/usecases/usecase_interface.template",
-              "{custom_folder}/{feature_name}/domain/usecases/usecase_imp.template",
+              "{custom_folder}/{feature_name}/domain/usecases/{{usecase_name}}.template",
+              "{custom_folder}/{feature_name}/domain/usecases/{{usecase_name}}_usecase.template",
               "{custom_folder}/{feature_name}/domain/entities/",
               "{custom_folder}/{feature_name}/domain/repositories/",
               "{custom_folder}/{feature_name}/domain/errors/",
