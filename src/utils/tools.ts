@@ -1,3 +1,4 @@
+import { camelCase, pascalCase, snakeCase } from "change-case";
 import * as vscode from "vscode";
 import { PromptOptions } from "./PromptOptions";
 
@@ -17,3 +18,32 @@ export function promptForUser(
 
   return vscode.window.showInputBox(option);
 }
+
+declare global {
+  interface String {
+    replaceName(searchTerm: string, replaceFor: string): string;
+  }
+}
+
+String.prototype.replaceName = function (
+  searchTerm: string,
+  replaceFor: string
+): string {
+  let targetText = this;
+
+  if (searchTerm.includes("snakeCase")) {
+    targetText = targetText.replaceAll(searchTerm, snakeCase(replaceFor));
+  }
+
+  if (searchTerm.includes("pascalCase")) {
+    targetText = targetText.replaceAll(searchTerm, pascalCase(replaceFor));
+  }
+
+  if (searchTerm.includes("camelCase")) {
+    targetText = targetText.replaceAll(searchTerm, camelCase(replaceFor));
+  }
+
+  targetText = targetText.replaceAll(searchTerm, replaceFor);
+
+  return `${targetText}`;
+};

@@ -41,17 +41,17 @@
           "scaffolding.layers.templates": {
             "type": "array",
             "default": [
-              "{custom_folder}/{feature_name}/domain/usecases/{{usecase_name}}.template",
-              "{custom_folder}/{feature_name}/domain/usecases/{{usecase_name}}_usecase.template",
-              "{custom_folder}/{feature_name}/domain/entities/",
-              "{custom_folder}/{feature_name}/domain/repositories/",
-              "{custom_folder}/{feature_name}/domain/errors/",
-              "{custom_folder}/{feature_name}/data/datasources/",
-              "{custom_folder}/{feature_name}/data/models/",
-              "{custom_folder}/{feature_name}/data/repositories/",
-              "{custom_folder}/{feature_name}/presentation/pages/",
-              "{custom_folder}/{feature_name}/presentation/pages/widgets/",
-              "{custom_folder}/{feature_name}/presentation/pages/{feature_name}_bloc"
+              "{{custom_folder}}/{{feature_name}}/domain/usecases/{{usecase_name.snakeCase}}.template",
+              "{{custom_folder}}/{{feature_name}}/domain/usecases/{{usecase_name.snakeCase}}_usecase.template",
+              "{{custom_folder}}/{{feature_name}}/domain/entities/",
+              "{{custom_folder}}/{{feature_name}}/domain/repositories/",
+              "{{custom_folder}}/{{feature_name}}/domain/errors/",
+              "{{custom_folder}}/{{feature_name}}/data/datasources/",
+              "{{custom_folder}}/{{feature_name}}/data/models/",
+              "{{custom_folder}}/{{feature_name}}/data/repositories/",
+              "{{custom_folder}}/{{feature_name}}/presentation/pages/",
+              "{{custom_folder}}/{{feature_name}}/presentation/pages/widgets/",
+              "{{custom_folder}}/{{feature_name}}/presentation/pages/{{feature_name}}_bloc"
             ],
             "markdownDescription": "#### **An array os string with the templates of your layers.**\nYou can use some keywords to indicates special locations:\n- **{root_folder}** to '/lib';\n- **{custom_folder}** to clicked folder;\n- **{feature_name}** to use the given custom name. \n\n\nEx: '{root_folder}/{feature_name}/domain/usecases/'"
           },
