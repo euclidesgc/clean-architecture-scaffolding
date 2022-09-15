@@ -10,7 +10,7 @@
     "email": "euclides.catunda@gmail.com",
     "url": "https://www.linkedin.com/in/euclidesgc/"
   },
-  "version": "0.0.2",
+  "version": "0.0.3",
   "repository": {
     "type": "git",
     "url": "https://github.com/euclidesgc/clean-architecture-scaffolding"
@@ -54,12 +54,8 @@
               "{{custom_folder}}/{{feature_name}}/presentation/pages/{{feature_name}}_bloc"
             ],
             "markdownDescription": "#### **An array os string with the templates of your layers.**\nYou can use some keywords to indicates special locations:\n- **{root_folder}** to '/lib';\n- **{custom_folder}** to clicked folder;\n- **{feature_name}** to use the given custom name. \n\n\nEx: '{root_folder}/{feature_name}/domain/usecases/'"
-          },
-          "scaffolding.layers.test": {
-            "type": "boolean",
-            "default": true,
-            "description": "Create the same structure for the test folder"
           }
+          
         }
       }
     ],
@@ -80,11 +76,13 @@
     "commands": [
       {
         "command": "clean-architecture-scaffolding.createFolders",
-        "title": "Clean Arch Scaffolding -> Create Folders"
+        "title": "Clean Arch Scaffolding -> Create Folders",
+        "category": "Clean Arch Scaffolding"
       },
       {
         "command": "clean-architecture-scaffolding.createUsecase",
-        "title": "Clean Arch Scaffolding -> New Usecase"
+        "title": "Clean Arch Scaffolding -> New Usecase",
+        "category": "Clean Arch Scaffolding"
       }
     ]
   },

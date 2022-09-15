@@ -1,10 +1,15 @@
+import '../repositories/{{usecase_name.snakeCase}}_repository.dart';
 import '{{usecase_name.snakeCase}}.dart';
 
-class {{usecase_name.pascalCase}}Imp implements {{usecase_name.pascalCase}} {
+
+class {{usecase_name.pascalCase}}Usecase extends {{usecase_name.pascalCase}} {
+  final {{usecase_name.pascalCase}}Repository {{usecase_name.camelCase}}Repository;
+
+  {{usecase_name.pascalCase}}Usecase(this.{{usecase_name.camelCase}}Repository);
+
   @override
   Future<void> call() {
-
     // TODO: implement call
-    throw UnimplementedError();
+    return {{usecase_name.camelCase}}Repository.{{usecase_name.camelCase}}(params: {});
   }
 }

@@ -1,77 +1,107 @@
-import { pascalCase, snakeCase } from "change-case";
 import { readFileSync, writeFile } from "fs";
-import { Uri, window, workspace } from "vscode";
+import { Uri, window } from "vscode";
 import * as utils from "../utils/tools";
 
 export async function createUsecase(uri: Uri) {
-  const customFolder = uri.fsPath;
-  const indexOfLibFolder = customFolder.indexOf("/lib", 0);
-  
-  const folderList = workspace
-    .getConfiguration("scaffolding")
-    .get("layers.templates");
+  //Get the keywords values
 
-  const usecaseName = await utils.promptForUser({
-    title: "Create usecase",
-    prompt: "Usecase name? (please, prefer snake_case mode)",
-    placeHolder: "Ex: get_products, user_register, etc",
-  });
+  const clickedFolder = utils.getClickedFolder(uri);
+  const rootFolder = utils.getRootFolder(uri);
+  const filePathConfigList = await utils.getExtensionFileTemplates();
+  const usecaseName = await getUsecaseName();
 
-  if (!usecaseName || usecaseName?.includes(" ")) {
-    window.showErrorMessage(
-      "Usecase name is required and spaces are not allowed!"
-    );
+  //Se não informar o usecaseName não deve continuar
+  if (!usecaseName) {
     return;
   }
 
-  if (folderList && Array.isArray(folderList)) {
-    const templatesList = folderList.filter((element) => {
-      return element.endsWith(".template");
-    });
+  if (filePathConfigList && Array.isArray(filePathConfigList)) {
+    const templatesList = getTemplatesFileList(filePathConfigList);
+    let featureName: string | undefined;
 
     try {
       let templatesMap = new Map<string, string>();
 
       templatesList.forEach(async (element: string) => {
-        const templateFileNameWithExtension = element.substring(
+        featureName = getFeatureName(clickedFolder, element, uri);
+        if (!featureName) {
+          return;
+        }
+
+        const templateFileName = element.substring(
           element.lastIndexOf("/") + 1,
           element.length
         );
 
-        // element      =                                            '{custom_folder}/{feature_name}/domain/usecases/usecase_interface.template'
-        // customFolder = '/Users/colaborador/development/grupo_boticario/menu/lib/src/login_feature/domain/usecases'
+        const pathFileName = element
+          .replaceName("{{feature_name}}", featureName)
+          .replaceName("{{custom_folder}}", clickedFolder)
+          .replaceName("{{usecase_name}}", usecaseName)
+          .replaceName("{{root_folder}}", rootFolder)
 
-        const useCaseFileName = `${customFolder}/${templateFileNameWithExtension
+          .replaceName("{{feature_name.lowerCase}}", featureName)
+          .replaceName("{{custom_folder.lowerCase}}", clickedFolder)
+          .replaceName("{{usecase_name.lowerCase}}", usecaseName)
+          .replaceName("{{root_folder.lowerCase}}", rootFolder)
+
+          .replaceName("{{feature_name.upperCase}}", featureName)
+          .replaceName("{{custom_folder.upperCase}}", clickedFolder)
+          .replaceName("{{usecase_name.upperCase}}", usecaseName)
+          .replaceName("{{root_folder.upperCase}}", rootFolder)
+
+          .replaceName("{{feature_name.snakeCase}}", featureName)
+          .replaceName("{{custom_folder.snakeCase}}", clickedFolder)
           .replaceName("{{usecase_name.snakeCase}}", usecaseName)
-          .replace(".template", ".dart")}`;
+          .replaceName("{{root_folder.snakeCase}}", rootFolder)
 
-        let templateFile = `${customFolder.substring(
-          0,
-          indexOfLibFolder
-        )}/.my_templates/${templateFileNameWithExtension}`;
+          .replaceName("{{feature_name.pascalCase}}", featureName)
+          .replaceName("{{custom_folder.pascalCase}}", clickedFolder)
+          .replaceName("{{usecase_name.pascalCase}}", usecaseName)
+          .replaceName("{{root_folder.pascalCase}}", rootFolder)
 
+          .replaceName("{{feature_name.camelCase}}", featureName)
+          .replaceName("{{custom_folder.camelCase}}", clickedFolder)
+          .replaceName("{{usecase_name.camelCase}}", usecaseName)
+          .replaceName("{{root_folder.camelCase}}", rootFolder)
+
+          .replaceAll(".template", ".dart");
+
+        let templateFile = `${rootFolder}/.my_templates/${templateFileName}`;
         let templateContent = readFileSync(templateFile, "utf8");
 
         if (templateContent && templateContent !== null) {
-          templatesMap.set(useCaseFileName, templateContent);
+          templatesMap.set(pathFileName, templateContent);
         }
+        console.log(pathFileName);
       });
 
       if (templatesMap) {
         templatesMap.forEach((content, filePath) => {
-          content = content.replaceName(
-            `{{usecase_name.pascalCase}}`,
-            usecaseName
-          );
-          content = content.replaceName(
-            `{{usecase_name.snakeCase}}`,
-            usecaseName
-          );
+          content = content
+            .replaceName("{{feature_name.lowerCase}}", featureName!)
+            .replaceName("{{custom_folder.lowerCase}}", clickedFolder)
+            .replaceName("{{usecase_name.lowerCase}}", usecaseName)
+            .replaceName("{{root_folder.lowerCase}}", rootFolder)
 
-          content = content.replaceName(
-            `{{usecase_name.camelCase}}`,
-            usecaseName
-          );
+            .replaceName("{{feature_name.upperCase}}", featureName!)
+            .replaceName("{{custom_folder.upperCase}}", clickedFolder)
+            .replaceName("{{usecase_name.upperCase}}", usecaseName)
+            .replaceName("{{root_folder.upperCase}}", rootFolder)
+
+            .replaceName("{{feature_name.snakeCase}}", featureName!)
+            .replaceName("{{custom_folder.snakeCase}}", clickedFolder)
+            .replaceName("{{usecase_name.snakeCase}}", usecaseName)
+            .replaceName("{{root_folder.snakeCase}}", rootFolder)
+
+            .replaceName("{{feature_name.pascalCase}}", featureName!)
+            .replaceName("{{custom_folder.pascalCase}}", clickedFolder)
+            .replaceName("{{usecase_name.pascalCase}}", usecaseName)
+            .replaceName("{{root_folder.pascalCase}}", rootFolder)
+
+            .replaceName("{{feature_name.camelCase}}", featureName!)
+            .replaceName("{{custom_folder.camelCase}}", clickedFolder)
+            .replaceName("{{usecase_name.camelCase}}", usecaseName)
+            .replaceName("{{root_folder.camelCase}}", rootFolder);
 
           templatesMap.set(filePath, content);
 
@@ -86,4 +116,50 @@ export async function createUsecase(uri: Uri) {
       throw error;
     }
   }
+}
+
+async function getUsecaseName(): Promise<string | undefined> {
+  const usecaseName = await window.showInputBox({
+    title: "Create Usecase",
+    prompt: "Usecase name? (please, prefer snake_case mode!)",
+    placeHolder: "Ex: get_products -> get_products_usecase",
+    validateInput: function (value: string) {
+      if (!value || value?.includes(" ")) {
+        return "Name is required! and spaces are not allowed!";
+      }
+    },
+  });
+
+  return usecaseName;
+}
+
+function getTemplatesFileList(filePathConfig: Array<string>) {
+  const templatesList = filePathConfig.filter((element) => {
+    return element.endsWith(".template");
+  });
+  return templatesList;
+}
+
+function getFeatureName(
+  clickedFolder: string,
+  template: string,
+  uri: Uri
+): string | undefined {
+  let indexOfFeatureName = 0;
+  template = template.replaceName("{{root_folder}}", utils.getRootFolder(uri));
+  const templateArray = template.split("/");
+  const clickedArray = clickedFolder.split("/");
+  const featureName = templateArray.find(isFeature);
+  if (featureName) {
+    indexOfFeatureName = templateArray.indexOf(featureName, 0);
+  }
+  if (indexOfFeatureName > 0) {
+    return clickedArray[indexOfFeatureName];
+  } else {
+    return undefined;
+  }
+}
+
+function isFeature(item: string) {
+  return item.includes("feature_name");
 }

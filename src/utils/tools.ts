@@ -1,23 +1,6 @@
 import { camelCase, pascalCase, snakeCase } from "change-case";
 import * as vscode from "vscode";
-import { PromptOptions } from "./PromptOptions";
 
-export function validateFeatureName(featureName?: string): boolean {
-  return !featureName || featureName?.includes(" ");
-}
-
-export function promptForUser(
-  options: PromptOptions
-): Thenable<string | undefined> {
-  const option: vscode.InputBoxOptions = {
-    prompt: options.prompt,
-    placeHolder: options.placeHolder,
-    title: options.title,
-    value: options.value,
-  };
-
-  return vscode.window.showInputBox(option);
-}
 
 declare global {
   interface String {
@@ -30,6 +13,14 @@ String.prototype.replaceName = function (
   replaceFor: string
 ): string {
   let targetText = this;
+
+  if (searchTerm.includes("lowerCase")) {
+    targetText = targetText.replaceAll(searchTerm, replaceFor.toLowerCase);
+  }
+
+  if (searchTerm.includes("upperCase")) {
+    targetText = targetText.replaceAll(searchTerm, replaceFor.toUpperCase);
+  }
 
   if (searchTerm.includes("snakeCase")) {
     targetText = targetText.replaceAll(searchTerm, snakeCase(replaceFor));
@@ -47,3 +38,20 @@ String.prototype.replaceName = function (
 
   return `${targetText}`;
 };
+
+export function getClickedFolder(uri: vscode.Uri): string {
+  return uri.fsPath;
+}
+
+export function getRootFolder(uri: vscode.Uri): string {
+  return vscode.workspace.getWorkspaceFolder(uri)?.uri.fsPath!;
+}
+
+export function getLibFolder(uri: vscode.Uri): string {
+  const indexOfLibFolder = uri.fsPath.indexOf("/lib", 0);
+  return uri.fsPath.substring(0, indexOfLibFolder + 4);
+}
+
+export async function getExtensionFileTemplates(): Promise<string> {
+  return await vscode.workspace.getConfiguration("scaffolding").get("layers.templates")!;
+}
