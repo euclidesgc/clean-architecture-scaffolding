@@ -1,0 +1,23 @@
+import 'dart:developer';
+
+import 'package:flutter/foundation.dart';
+import 'package:{{package_name}}/src/{{feature_name.lowerCase}}/infrastructure/datasources/{{usecase_name.snakeCase}}_datasource.dart';
+import 'package:{{package_name}}/src/{{feature_name.lowerCase}}/domain/repositories/{{usecase_name.snakeCase}}_repository.dart';
+
+class {{usecase_name.pascalCase}}RepositoryImpl implements {{usecase_name.pascalCase}}Repository {
+  final {{usecase_name.pascalCase}}Datasource {{usecase_name.camelCase}}Datasource;
+
+  const {{usecase_name.pascalCase}}RepositoryImpl(this.{{usecase_name.camelCase}}Datasource);
+
+  @override
+  call() {
+    try{
+      return {{usecase_name.camelCase}}Datasource();
+    } catch (error, stack) {
+      if (kDebugMode) {
+        log('📛 Error', error: error, stackTrace: stack);
+      }
+      rethrow;
+    }
+  }
+}
