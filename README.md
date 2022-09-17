@@ -4,23 +4,41 @@ It generates a folder structure according to your own template.
 Take a look at the settings page.
 
 ## Features
- 
-Right-click on any folder in your project and then click "Clean Arch Scaffolding > New Feature".<br/>
-![Clean Arch Scaffolding > New Feature](images/menu.png)<br/>
-Enter the name of your new feature<br/>
+### STEP 01: <br/> 
+Right-click on any folder in your project and then click "Clean Arch Scaffolding.: Create folders".<br/><br/>
+![Clean Arch Scaffolding > New Feature](images/menu_folder.png)<br/>
+
+Enter the name of your New feature:<br/><br/>
 ![Give a feature name](images/feature_name.png)<br/>
+
 The directories will be created according to the template defined in the settings.<br/>
 ![The folders will be created](images/folders.png)<br/>
+### STEP 02: <br/> 
+Right-click in folder called 'usecase' (We use regex to identify any folder with usecase in the name to show this menu option!) then click "Clean Arch Scaffolding.: New usecase".<br/> 
+![Clean Arch Scaffolding > New Feature](images/menu_usecase.png)<br/>
+
+The source files will be created in accord with templates in folder ".my_templates" of your project: <br/>
+![Folder template](images/templates_folder.png)<br/>
+
+You can write the template file using special keywords.<br/>
+Look this sample:<br/>
+![Template file](images/template_file.png)<br/>
+#### Write your own templates and share with us:
+Look in this repository:<br/>
+https://github.com/euclidesgc/clean-architecture-scaffolding/tree/main/.my_templates
+
+### Settings:
 If you want to adapt the template, go to the extension settings and edit the json with the templates.<br/>
 ![Like this default settings](images/settings.png)<br/>
 
-#### You can use some keywords to indicates special locations:<br/>
+#### You can use this special keywords to indicates some locations:<br/>
+- **{{package_name}}** to get name of your package in pubspec.yaml file;<br/>
 - **{{root_folder}}** to first folder of your projetc;<br/>
 - **{{custom_folder}}** to clicked folder;<br/>
 - **{{feature_name}}** to use the given custom name;<br/>
 - **{{usecase_name}}** to use a given usecase name;<br/>
 
-#### And you can associate this keywords with some format pattern too as given below:
+#### And you can associate this keywords with this format pattern too as given below:
 - **{{usecase_name.lowerCase}}** to use a given usecase name with lowercase pattern;<br/>
 - **{{usecase_name.upperCase}}** to use a given usecase name with UPPERCASE pattern;<br/>  
 - **{{usecase_name.snakeCase}}** to use a given usecase name with snake_case pattern (indicate to file path names);<br/>
@@ -46,5 +64,8 @@ In the next versions we will also add some file templates according to the conte
 ### 0.0.3
 - Test flag removed
 - introduce the .template files with a template of a dart class file using special keywords 
+### 0.0.5
+- New special keyword "{{package_name}} added to help you with imports lines in templates file;
+- New templates files in repository 
 
 **Enjoy!**
