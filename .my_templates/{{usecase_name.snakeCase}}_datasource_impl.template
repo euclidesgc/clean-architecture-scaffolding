@@ -1,0 +1,18 @@
+import 'dart:developer';
+
+import 'package:flutter/foundation.dart';
+import 'package:{{package_name}}/src/{{feature_name.lowerCase}}/infrastructure/datasources/{{usecase_name.snakeCase}}_datasource.dart';
+
+class {{usecase_name.pascalCase}}DatasourceImpl implements {{usecase_name.pascalCase}}Datasource {
+  @override
+  call() {
+    try{
+      throw UnimplementedError();
+    } catch (error, stack) {
+      if (kDebugMode) {
+        log('📛 Error', error: error, stackTrace: stack);
+      }
+      rethrow;
+    }
+  }
+}

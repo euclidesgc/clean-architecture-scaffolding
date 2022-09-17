@@ -1,6 +1,3 @@
 abstract class {{usecase_name.pascalCase}}Repository {
-  //todo: change this method to your necessities 
-  Future<void> {{usecase_name.camelCase}}({
-    required dynamic params,
-  });
+  call();
 }

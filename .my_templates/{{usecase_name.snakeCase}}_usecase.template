@@ -1,15 +1,21 @@
-import '../repositories/{{usecase_name.snakeCase}}_repository.dart';
-import '{{usecase_name.snakeCase}}.dart';
+import 'dart:developer';
 
+import 'package:flutter/foundation.dart';
+import 'package:{{package_name}}/src/{{feature_name.lowerCase}}/domain/repositories/{{usecase_name.snakeCase}}_repository.dart';
 
-class {{usecase_name.pascalCase}}Usecase extends {{usecase_name.pascalCase}} {
+class {{usecase_name.pascalCase}}Usecase {
   final {{usecase_name.pascalCase}}Repository {{usecase_name.camelCase}}Repository;
 
   {{usecase_name.pascalCase}}Usecase(this.{{usecase_name.camelCase}}Repository);
 
-  @override
-  Future<void> call() {
-    // TODO: implement call
-    return {{usecase_name.camelCase}}Repository.{{usecase_name.camelCase}}(params: {});
+  call() {
+    try {
+      return {{usecase_name.camelCase}}Repository();     
+    } catch (error, stack) {
+      if (kDebugMode) {
+        log('📛 Error', error: error, stackTrace: stack);
+      }
+      rethrow;
+    }
   }
 }

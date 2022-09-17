@@ -1,3 +1,0 @@
-abstract class {{usecase_name.pascalCase}} {
-  Future<void> call();
-}
