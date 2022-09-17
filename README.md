@@ -14,34 +14,37 @@ The directories will be created according to the template defined in the setting
 If you want to adapt the template, go to the extension settings and edit the json with the templates.<br/>
 ![Like this default settings](images/settings.png)<br/>
 
-You can use some keywords to indicates special locations:<br/>
-- **{root_folder}** to '/lib';<br/>
-- **{custom_folder}** to clicked folder;<br/>
-- **{feature_name}** to use the given custom name.<br/>
-**Ex:** '{root_folder}/{feature_name}/domain/usecases/'
+#### You can use some keywords to indicates special locations:<br/>
+- **{{root_folder}}** to first folder of your projetc;<br/>
+- **{{custom_folder}}** to clicked folder;<br/>
+- **{{feature_name}}** to use the given custom name;<br/>
+- **{{usecase_name}}** to use a given usecase name;<br/>
+
+#### And you can associate this keywords with some format pattern too as given below:
+- **{{usecase_name.lowerCase}}** to use a given usecase name with lowercase pattern;<br/>
+- **{{usecase_name.upperCase}}** to use a given usecase name with UPPERCASE pattern;<br/>  
+- **{{usecase_name.snakeCase}}** to use a given usecase name with snake_case pattern (indicate to file path names);<br/>
+- **{{usecase_name.pascalCase}}** to use a given usecase name with PascalCase pattern (indicate to Class names);<br/>
+- **{{usecase_name.camelCase}}**  to use a given usecase name with camelCase pattern (indicate to variables names).<br/>
+
+**Ex:** '{{custom_folder}}/{{feature_name}}/domain/usecases/{{usecase_name.snakeCase}}.template' 
 
 ![Using this folders templates](images/json.png)
 
 ## Extension Settings
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
-
-For example:
-
-This extension contributes the following settings:
-
 * `scaffolding.layers.templates`: Array of strings with folder template definitions.
-* `scaffolding.layers.test`: Check to create the same structure in test folder too.
 
 ## Release Notes
 
-This initial version generates only the folders.
+### 0.0.1
+- This initial version generates only the folders.
 In the next versions we will also add some file templates according to the context of the clicked folder.
 
-## Following extension guidelines
-
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
-
-* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
+### 0.0.2
+- some bugs corrections
+### 0.0.3
+- Test flag removed
+- introduce the .template files with a template of a dart class file using special keywords 
 
 **Enjoy!**

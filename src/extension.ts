@@ -1,75 +1,75 @@
+// import * as vscode from "vscode";
 import * as fs from "fs";
 import * as vscode from "vscode";
+import { createFolders } from "./commands/create_folders";
+import { createUsecase } from "./commands/create_usecase";
 
 export function activate(context: vscode.ExtensionContext) {
-  console.log(
-    'Congratulations, your extension "Clean Architecture Scaffolding" is now active!'
+  vscode.commands.registerCommand(
+    "clean-architecture-scaffolding.createFolders",
+    async (uri: vscode.Uri) => {
+      await createFolders(uri);
+    }
   );
 
-  let disposable = vscode.commands.registerCommand(
-    "clean-architecture-scaffolding.createNewFeature",
+  vscode.commands.registerCommand(
+    "clean-architecture-scaffolding.createUsecase",
     async (uri: vscode.Uri) => {
-      const userFeatureName = await vscode.window.showInputBox({
-        prompt: "Feature name?",
-        placeHolder: "Ex: login or get_products",
-      });
-
-      if (!userFeatureName) {
-        vscode.window.showErrorMessage("Feature name is required!");
-        return;
-      }
-
-      if (userFeatureName?.includes(" ")) {
-        vscode.window.showErrorMessage("Spaces are not allowed!");
-        return;
-      }
-
-      const customFolder = uri.fsPath;
-
-      let indexOfLibFolder = customFolder.indexOf("/lib", 0);
-      const rootFolder = customFolder.substring(0, indexOfLibFolder) + "/lib";
-
-      let folderList = vscode.workspace
-        .getConfiguration("scaffolding")
-        .get("layers.templates");
-
-      let makeTestFolder = vscode.workspace
-        .getConfiguration("scaffolding")
-        .get("layers.test");
-
-      if (folderList && Array.isArray(folderList)) {
-        try {
-          let featureFolder = "";
-
-          folderList.forEach((element) => {
-            featureFolder = element.replaceAll("{root_folder}", rootFolder);
-            featureFolder = featureFolder.replaceAll(
-              "{custom_folder}",
-              customFolder
-            );
-            featureFolder = featureFolder.replaceAll(
-              "{feature_name}",
-              userFeatureName
-            );
-
-            const testFeatureFolder = featureFolder.replace("/lib", "/test");
-
-            fs.mkdirSync(featureFolder, { recursive: true });
-
-            if (makeTestFolder) {
-              fs.mkdirSync(testFeatureFolder, { recursive: true });
-            }
-          });
-        } catch (err) {
-          console.log("Error", err);
-          throw err;
-        }
+      if (await templatesOk(uri)) {
+        await createUsecase(uri);
+      } else {
+        vscode.window.showInformationMessage(
+          `Tip: Look for templates in github: https://github.com/euclidesgc/clean-architecture-scaffolding/tree/main/.my_templates`
+        );
+        vscode.window.showErrorMessage(
+          "Verify your templates files in Extension config and /.my_templates folder. Maybe some name is wrong..."
+        );
       }
     }
   );
 
-  context.subscriptions.push(disposable);
+  async function templatesOk(uri: vscode.Uri): Promise<Boolean> {
+    const folderList = (await vscode.workspace
+      .getConfiguration("scaffolding")
+      .get("layers.templates")) as Array<string>;
+
+    const templateList = folderList.filter((element) =>
+      element.endsWith(".template")
+    );
+
+    if (folderList.length <= 0 && templateList.length <= 0) {
+      return false;
+    }
+
+    const rootFolder = uri.path.substring(0, uri.path.indexOf("/lib"));
+    let fileName = "";
+
+    if (templateList && templateList.length > 0) {
+      for (const key in templateList) {
+        if (Object.prototype.hasOwnProperty.call(templateList, key)) {
+          const element = templateList[key];
+
+          let fileName = element.substring(
+            element.lastIndexOf("/") + 1,
+            element.length
+          );
+
+          const templateFile = `${rootFolder}/.my_templates/${fileName}`;
+
+          if (!fs.existsSync(templateFile)) {
+            return false;
+          }
+        }
+      }
+    } else {
+      return false;
+    }
+
+    return true;
+  }
+
+  // context.subscriptions.push(createNewFeature, createUseCase);
 }
 
 // this method is called when your extension is deactivated
-export function deactivate() {}
+// export function deactivate() {}

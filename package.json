@@ -1,7 +1,7 @@
 {
   "name": "clean-architecture-scaffolding",
   "displayName": "Clean Architecture Scaffolding",
-  "description": "Generate folder structure for features in Flutter projects",
+  "description": "Generate folder structure and files for features in Flutter projects in accord with your custom templates",
   "publisher": "euclidesgc",
   "icon": "icon.png",
   "homepage": "https://www.linkedin.com/in/euclidesgc/",
@@ -10,7 +10,7 @@
     "email": "euclides.catunda@gmail.com",
     "url": "https://www.linkedin.com/in/euclidesgc/"
   },
-  "version": "0.0.2",
+  "version": "0.0.4",
   "repository": {
     "type": "git",
     "url": "https://github.com/euclidesgc/clean-architecture-scaffolding"
@@ -29,7 +29,8 @@
     "clean arch"
   ],
   "activationEvents": [
-    "onCommand:clean-architecture-scaffolding.createNewFeature"
+    "onCommand:clean-architecture-scaffolding.createFolders",
+    "onCommand:clean-architecture-scaffolding.createUsecase"
   ],
   "main": "./out/extension.js",
   "contributes": {
@@ -40,23 +41,18 @@
           "scaffolding.layers.templates": {
             "type": "array",
             "default": [
-              "{custom_folder}/{feature_name}/domain/usecases",
-              "{custom_folder}/{feature_name}/domain/entities",
-              "{custom_folder}/{feature_name}/domain/repositories",
-              "{custom_folder}/{feature_name}/domain/errors",
-              "{custom_folder}/{feature_name}/data/datasources",
-              "{custom_folder}/{feature_name}/data/models",
-              "{custom_folder}/{feature_name}/data/repositories",
-              "{custom_folder}/{feature_name}/presentation/pages",
-              "{custom_folder}/{feature_name}/presentation/pages/widgets",
-              "{custom_folder}/{feature_name}/presentation/pages/{feature_name}_bloc"
+              "{{root_folder}}/lib/src/{{feature_name}}/domain/usecases/{{usecase_name.snakeCase}}.template",
+              "{{root_folder}}/lib/src/{{feature_name}}/domain/repositories/{{usecase_name.snakeCase}}_repository.template",
+              "{{root_folder}}/lib/src/{{feature_name}}/domain/errors",
+              "{{root_folder}}/lib/src/{{feature_name}}/domain/entities",
+              "{{root_folder}}/lib/src/{{feature_name}}/infrastructure/repositories/{{usecase_name.snakeCase}}_repository_impl.template",
+              "{{root_folder}}/lib/src/{{feature_name}}/infrastructure/datasources/{{usecase_name.snakeCase}}_datasource.template",
+              "{{root_folder}}/lib/src/{{feature_name}}/data/models",
+              "{{root_folder}}/lib/src/{{feature_name}}/data/datasources/{{usecase_name.snakeCase}}_datasource_impl.template",
+              "{{root_folder}}/lib/src/{{feature_name}}/presentation/pages",
+              "{{root_folder}}/lib/src/{{feature_name}}/presentation/widgets"
             ],
-            "markdownDescription": "#### **An array os string with the templates of your layers.**\nYou can use some keywords to indicates special locations:\n- **{root_folder}** to '/lib';\n- **{custom_folder}** to clicked folder;\n- **{feature_name}** to use the given custom name. \n\n\nEx: '{root_folder}/{feature_name}/domain/usecases/'"
-          },
-          "scaffolding.layers.test": {
-            "type": "boolean",
-            "default": true,
-            "description": "Create the same structure for the test folder"
+            "markdownDescription": "#### **An array os string with the templates of your layers.**\nYou can use some keywords to indicates special locations and names:\n - **{{package_name}}** to get the name of package in pubspeck.yaml file;\n - **{{root_folder}}** to './';\n - **{{custom_folder}}** to clicked folder;\n - **{{feature_name}}** to use the given custom name.\n\n\nEx: '{{root_folder}}/lib/src/{{feature_name}}/domain/errors'"
           }
         }
       }
@@ -65,15 +61,26 @@
       "explorer/context": [
         {
           "when": "explorerResourceIsFolder && dart-code:anyFlutterProjectLoaded && dart-code:isRunningLocally",
-          "command": "clean-architecture-scaffolding.createNewFeature",
-          "group": "clean_architecture_scaffolding"
+          "command": "clean-architecture-scaffolding.createFolders",
+          "group": "1_clean_architecture_scaffolding@1"
+        },
+        {
+          "when": "explorerResourceIsFolder && dart-code:anyFlutterProjectLoaded && dart-code:isRunningLocally && resourcePath =~ /.*([uU][sS][eE][-_]*[cC][aA][sS][eE][sS]?)$/",
+          "command": "clean-architecture-scaffolding.createUsecase",
+          "group": "1_clean_architecture_scaffolding@1"
         }
       ]
     },
     "commands": [
       {
-        "command": "clean-architecture-scaffolding.createNewFeature",
-        "title": "Clean Arch Scaffolding > New Feature"
+        "command": "clean-architecture-scaffolding.createFolders",
+        "title": "Clean Arch Scaffolding.: Create folders",
+        "category": "Clean Arch Scaffolding"
+      },
+      {
+        "command": "clean-architecture-scaffolding.createUsecase",
+        "title": "Clean Arch Scaffolding.: New usecase",
+        "category": "Clean Arch Scaffolding"
       }
     ]
   },
@@ -86,16 +93,19 @@
     "test": "node ./out/test/runTest.js"
   },
   "devDependencies": {
-    "@types/vscode": "^1.70.0",
     "@types/glob": "^7.2.0",
     "@types/mocha": "^9.1.1",
     "@types/node": "16.x",
+    "@types/vscode": "^1.70.0",
     "@typescript-eslint/eslint-plugin": "^5.31.0",
     "@typescript-eslint/parser": "^5.31.0",
+    "@vscode/test-electron": "^2.1.5",
     "eslint": "^8.20.0",
     "glob": "^8.0.3",
     "mocha": "^10.0.0",
-    "typescript": "^4.7.4",
-    "@vscode/test-electron": "^2.1.5"
+    "typescript": "^4.7.4"
+  },
+  "dependencies": {
+    "change-case": "^4.1.2"
   }
 }
