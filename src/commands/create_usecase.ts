@@ -4,12 +4,11 @@ import * as utils from "../utils/tools";
 
 export async function createUsecase(uri: Uri) {
   //Get the keywords values
-
   const clickedFolder = utils.getClickedFolder(uri);
   const rootFolder = utils.getRootFolder(uri);
   const filePathConfigList = await utils.getExtensionFileTemplates();
   const usecaseName = await getUsecaseName();
-  const packageName = utils.getPackageName(uri);
+  const packageName = await utils.getPackageName(uri);
 
   //Se não informar o usecaseName não deve continuar
   if (!usecaseName) {
@@ -24,7 +23,6 @@ export async function createUsecase(uri: Uri) {
       let templatesMap = new Map<string, string>();
 
       templatesList.forEach(async (element: string) => {
-
         featureName = getFeatureName(clickedFolder, element, uri);
         if (!featureName) {
           return;
@@ -86,40 +84,115 @@ export async function createUsecase(uri: Uri) {
       if (templatesMap) {
         templatesMap.forEach((content, filePath) => {
           content = content.replaceName("{{feature_name}}", featureName!);
-            content = content.replaceName("{{custom_folder}}", clickedFolder);
-            content = content.replaceName("{{usecase_name}}", usecaseName);
-            content = content.replaceName("{{package_name}}", packageName);
-            content = content.replaceName("{{root_folder}}", rootFolder);
+          content = content.replaceName("{{custom_folder}}", clickedFolder);
+          content = content.replaceName("{{usecase_name}}", usecaseName);
+          content = content.replaceName("{{package_name}}", packageName);
+          content = content.replaceName("{{root_folder}}", rootFolder);
 
-            content = content.replaceName("{{feature_name.lowerCase}}", featureName!);
-            content = content.replaceName("{{custom_folder.lowerCase}}", clickedFolder);
-            content = content.replaceName("{{usecase_name.lowerCase}}", usecaseName);
-            content = content.replaceName("{{package_name.lowerCase}}", packageName);
-            content = content.replaceName("{{root_folder.lowerCase}}", rootFolder);
+          content = content.replaceName(
+            "{{feature_name.lowerCase}}",
+            featureName!
+          );
+          content = content.replaceName(
+            "{{custom_folder.lowerCase}}",
+            clickedFolder
+          );
+          content = content.replaceName(
+            "{{usecase_name.lowerCase}}",
+            usecaseName
+          );
+          content = content.replaceName(
+            "{{package_name.lowerCase}}",
+            packageName
+          );
+          content = content.replaceName(
+            "{{root_folder.lowerCase}}",
+            rootFolder
+          );
 
-            content = content.replaceName("{{feature_name.upperCase}}", featureName!);
-            content = content.replaceName("{{custom_folder.upperCase}}", clickedFolder);
-            content = content.replaceName("{{usecase_name.upperCase}}", usecaseName);
-            content = content.replaceName("{{package_name.upperCase}}", packageName);
-            content = content.replaceName("{{root_folder.upperCase}}", rootFolder);
+          content = content.replaceName(
+            "{{feature_name.upperCase}}",
+            featureName!
+          );
+          content = content.replaceName(
+            "{{custom_folder.upperCase}}",
+            clickedFolder
+          );
+          content = content.replaceName(
+            "{{usecase_name.upperCase}}",
+            usecaseName
+          );
+          content = content.replaceName(
+            "{{package_name.upperCase}}",
+            packageName
+          );
+          content = content.replaceName(
+            "{{root_folder.upperCase}}",
+            rootFolder
+          );
 
-            content = content.replaceName("{{feature_name.snakeCase}}", featureName!);
-            content = content.replaceName("{{custom_folder.snakeCase}}", clickedFolder);
-            content = content.replaceName("{{usecase_name.snakeCase}}", usecaseName);
-            content = content.replaceName("{{package_name.snakeCase}}", packageName);
-            content = content.replaceName("{{root_folder.snakeCase}}", rootFolder);
+          content = content.replaceName(
+            "{{feature_name.snakeCase}}",
+            featureName!
+          );
+          content = content.replaceName(
+            "{{custom_folder.snakeCase}}",
+            clickedFolder
+          );
+          content = content.replaceName(
+            "{{usecase_name.snakeCase}}",
+            usecaseName
+          );
+          content = content.replaceName(
+            "{{package_name.snakeCase}}",
+            packageName
+          );
+          content = content.replaceName(
+            "{{root_folder.snakeCase}}",
+            rootFolder
+          );
 
-            content = content.replaceName("{{feature_name.pascalCase}}", featureName!);
-            content = content.replaceName("{{custom_folder.pascalCase}}", clickedFolder);
-            content = content.replaceName("{{usecase_name.pascalCase}}", usecaseName);
-            content = content.replaceName("{{package_name.pascalCase}}", packageName);
-            content = content.replaceName("{{root_folder.pascalCase}}", rootFolder);
+          content = content.replaceName(
+            "{{feature_name.pascalCase}}",
+            featureName!
+          );
+          content = content.replaceName(
+            "{{custom_folder.pascalCase}}",
+            clickedFolder
+          );
+          content = content.replaceName(
+            "{{usecase_name.pascalCase}}",
+            usecaseName
+          );
+          content = content.replaceName(
+            "{{package_name.pascalCase}}",
+            packageName
+          );
+          content = content.replaceName(
+            "{{root_folder.pascalCase}}",
+            rootFolder
+          );
 
-            content = content.replaceName("{{feature_name.camelCase}}", featureName!);
-            content = content.replaceName("{{custom_folder.camelCase}}", clickedFolder);
-            content = content.replaceName("{{usecase_name.camelCase}}", usecaseName);
-            content = content.replaceName("{{package_name.camelCase}}", packageName);
-            content = content.replaceName("{{root_folder.camelCase}}", rootFolder);
+          content = content.replaceName(
+            "{{feature_name.camelCase}}",
+            featureName!
+          );
+          content = content.replaceName(
+            "{{custom_folder.camelCase}}",
+            clickedFolder
+          );
+          content = content.replaceName(
+            "{{usecase_name.camelCase}}",
+            usecaseName
+          );
+          content = content.replaceName(
+            "{{package_name.camelCase}}",
+            packageName
+          );
+          content = content.replaceName(
+            "{{root_folder.camelCase}}",
+            rootFolder
+          );
 
           templatesMap.set(filePath, content);
 
@@ -173,7 +246,7 @@ function getFeatureName(
   if (indexOfFeatureName > 0) {
     return clickedArray[indexOfFeatureName];
   } else {
-    return '';
+    return "";
   }
 }
 
