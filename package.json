@@ -10,7 +10,7 @@
     "email": "euclides.catunda@gmail.com",
     "url": "https://www.linkedin.com/in/euclidesgc/"
   },
-  "version": "0.0.5",
+  "version": "0.0.6",
   "repository": {
     "type": "git",
     "url": "https://github.com/euclidesgc/clean-architecture-scaffolding"
@@ -41,7 +41,7 @@
           "scaffolding.layers.templates": {
             "type": "array",
             "default": [
-              "{{root_folder}}/lib/src/{{feature_name}}/domain/usecases/{{usecase_name.snakeCase}}.template",
+              "{{root_folder}}/lib/src/{{feature_name}}/domain/usecases/{{usecase_name.snakeCase}}_usecase.template",
               "{{root_folder}}/lib/src/{{feature_name}}/domain/repositories/{{usecase_name.snakeCase}}_repository.template",
               "{{root_folder}}/lib/src/{{feature_name}}/domain/errors",
               "{{root_folder}}/lib/src/{{feature_name}}/domain/entities",
@@ -94,6 +94,8 @@
   },
   "devDependencies": {
     "@types/glob": "^7.2.0",
+    "@types/js-yaml": "^3.12.1",
+    "@types/lodash": "^4.14.121",
     "@types/mocha": "^9.1.1",
     "@types/node": "16.x",
     "@types/vscode": "^1.70.0",
@@ -106,6 +108,7 @@
     "typescript": "^4.7.4"
   },
   "dependencies": {
-    "change-case": "^4.1.2"
+    "change-case": "^4.1.2",
+    "lodash": "^4.17.21"
   }
 }

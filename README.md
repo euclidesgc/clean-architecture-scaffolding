@@ -1,4 +1,5 @@
-# clean-architecture-scaffolding README
+# Clean Architecture Scaffolding README
+## This extension is working in progress, the version 1.0.0 will be the stable version. 
 
 It generates a folder structure according to your own template.
 Take a look at the settings page.
@@ -61,11 +62,16 @@ In the next versions we will also add some file templates according to the conte
 
 ### 0.0.2
 - some bugs corrections
+
 ### 0.0.3
-- Test flag removed
-- introduce the .template files with a template of a dart class file using special keywords 
+- Test flag removed;
+- introduce the .template files with a template of a dart class file using special keywords;
+  
 ### 0.0.5
 - New special keyword "{{package_name}} added to help you with imports lines in templates file;
-- New templates files in repository 
+- New templates files in repository.
+
+### 0.0.6
+- bugfix related to pubspec.yaml, mandatory to get the package name.
 
 **Enjoy!**
