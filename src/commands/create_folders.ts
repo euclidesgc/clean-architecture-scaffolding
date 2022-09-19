@@ -3,6 +3,7 @@ import { Uri, window } from "vscode";
 import * as utils from "../utils/tools";
 
 export async function createFolders(uri: Uri) {
+  
   const featureName = await window.showInputBox({
     title: "New Feature Folders",
     prompt: "Feature name?",
@@ -19,11 +20,8 @@ export async function createFolders(uri: Uri) {
   }
 
   const clickedFolder = utils.getClickedFolder(uri);
-
   const rootFolder = utils.getRootFolder(uri);
-
   const folderList = await utils.getExtensionFileTemplates();
-
   const packageName = await utils.getPackageName(uri);
 
   if (folderList && Array.isArray(folderList)) {
@@ -32,14 +30,17 @@ export async function createFolders(uri: Uri) {
 
       folderList.forEach((element) => {
         featureFolder = element.replaceName("{{feature_name}}", featureName);
+
         featureFolder = featureFolder.replaceName(
           "{{custom_folder}}",
           clickedFolder
         );
+
         featureFolder = featureFolder.replaceName(
           "{{package_name}}",
           packageName
         );
+
         featureFolder = featureFolder.replaceName(
           "{{root_folder}}",
           rootFolder
@@ -49,14 +50,17 @@ export async function createFolders(uri: Uri) {
           "{{feature_name.lowerCase}}",
           featureName
         );
+
         featureFolder = featureFolder.replaceName(
           "{{custom_folder.lowerCase}}",
           clickedFolder
         );
+
         featureFolder = featureFolder.replaceName(
           "{{package_name.lowerCase}}",
           packageName
         );
+
         featureFolder = featureFolder.replaceName(
           "{{root_folder.lowerCase}}",
           rootFolder
@@ -66,14 +70,17 @@ export async function createFolders(uri: Uri) {
           "{{feature_name.upperCase}}",
           featureName
         );
+
         featureFolder = featureFolder.replaceName(
           "{{custom_folder.upperCase}}",
           clickedFolder
         );
+
         featureFolder = featureFolder.replaceName(
           "{{package_name.upperCase}}",
           packageName
         );
+
         featureFolder = featureFolder.replaceName(
           "{{root_folder.upperCase}}",
           rootFolder
@@ -83,14 +90,17 @@ export async function createFolders(uri: Uri) {
           "{{feature_name.snakeCase}}",
           featureName
         );
+
         featureFolder = featureFolder.replaceName(
           "{{custom_folder.snakeCase}}",
           clickedFolder
         );
+
         featureFolder = featureFolder.replaceName(
           "{{package_name.snakeCase}}",
           packageName
         );
+
         featureFolder = featureFolder.replaceName(
           "{{root_folder.snakeCase}}",
           rootFolder
@@ -100,14 +110,17 @@ export async function createFolders(uri: Uri) {
           "{{feature_name.pascalCase}}",
           featureName
         );
+
         featureFolder = featureFolder.replaceName(
           "{{custom_folder.pascalCase}}",
           clickedFolder
         );
+
         featureFolder = featureFolder.replaceName(
           "{{package_name.pascalCase}}",
           packageName
         );
+
         featureFolder = featureFolder.replaceName(
           "{{root_folder.pascalCase}}",
           rootFolder
@@ -117,14 +130,17 @@ export async function createFolders(uri: Uri) {
           "{{feature_name.camelCase}}",
           featureName
         );
+
         featureFolder = featureFolder.replaceName(
           "{{custom_folder.camelCase}}",
           clickedFolder
         );
+
         featureFolder = featureFolder.replaceName(
           "{{package_name.camelCase}}",
           packageName
         );
+        
         featureFolder = featureFolder.replaceName(
           "{{root_folder.camelCase}}",
           rootFolder
