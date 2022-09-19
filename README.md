@@ -74,4 +74,7 @@ In the next versions we will also add some file templates according to the conte
 ### 0.0.6
 - bugfix related to pubspec.yaml, mandatory to get the package name.
 
+### 0.0.7
+- remove warnig messages.
+
 **Enjoy!**
