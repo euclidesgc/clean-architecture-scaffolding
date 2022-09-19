@@ -1,9 +1,7 @@
 import { camelCase, pascalCase, snakeCase } from "change-case";
-import * as fs from "fs";
-import * as vscode from "vscode";
-import path = require("path");
-
-
+import * as _ from "lodash";
+import { Uri, window, workspace } from "vscode";
+import { getPubspec } from "./get-pubspec";
 
 declare global {
   interface String {
@@ -42,51 +40,27 @@ String.prototype.replaceName = function (
   return `${targetText}`;
 };
 
-export function getClickedFolder(uri: vscode.Uri): string {
+export function getClickedFolder(uri: Uri): string {
   return uri.fsPath;
 }
 
-export function getRootFolder(uri: vscode.Uri): string {
-  return vscode.workspace.getWorkspaceFolder(uri)?.uri.fsPath!;
+export function getRootFolder(uri: Uri): string {
+  return workspace.getWorkspaceFolder(uri)?.uri.fsPath!;
 }
 
-export function getPackageName(uri: vscode.Uri): string {
-  const pubspec = _loadPubspec(uri);
-
-  return pubspec.name;
+export async function getPackageName(uri: Uri): Promise<string> {
+  try {
+    const pubspec = await getPubspec(getRootFolder(uri));
+    const name = _.get(pubspec, "name", {});
+    return name;
+  } catch (error) {
+    window.showErrorMessage("Error load pubspec.yaml");
+    return "";
+  }
 }
 
 export async function getExtensionFileTemplates(): Promise<string> {
-  return await vscode.workspace.getConfiguration("scaffolding").get("layers.templates")!;
+  return await workspace
+    .getConfiguration("scaffolding")
+    .get("layers.templates")!;
 }
-
-function _loadPubspec(uri: vscode.Uri): any {
-  const yaml = require('js-yaml');
-
-  const pubspecPath =  _pubspecPath(uri);
-
-  if (fs.existsSync(pubspecPath)) {
-    return yaml.load(fs.readFileSync(pubspecPath, 'utf8'));
-  }
-
-  return vscode.window.showErrorMessage(
-    "pubspec.yaml is missing."
-  );
-}
-
-function _pubspecPath(uri: vscode.Uri): string {
-  return path.join(getRootFolder(uri), "pubspec.yaml");
-}
-
-// export const getWorkspaceFolder = (): string => {
-//   const folders = vscode.workspace.workspaceFolders;
-
-//   if (folders === undefined) {
-//     return '';
-//   }
-
-//   const folder = folders[0] || {};
-//   const uri = folder.uri;
-
-//   return uri.fsPath;
-// };

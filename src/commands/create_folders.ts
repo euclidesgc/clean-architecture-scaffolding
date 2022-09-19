@@ -19,46 +19,116 @@ export async function createFolders(uri: Uri) {
   }
 
   const clickedFolder = utils.getClickedFolder(uri);
+
   const rootFolder = utils.getRootFolder(uri);
+
   const folderList = await utils.getExtensionFileTemplates();
-  const packageName = utils.getPackageName(uri);
+
+  const packageName = await utils.getPackageName(uri);
 
   if (folderList && Array.isArray(folderList)) {
     try {
       let featureFolder = "";
 
       folderList.forEach((element) => {
-        featureFolder = element
-          .replaceName("{{feature_name}}", featureName)
-          .replaceName("{{custom_folder}}", clickedFolder)
-          .replaceName("{{package_name}}", packageName)
-          .replaceName("{{root_folder}}", rootFolder);
+        featureFolder = element.replaceName("{{feature_name}}", featureName);
+        featureFolder = featureFolder.replaceName(
+          "{{custom_folder}}",
+          clickedFolder
+        );
+        featureFolder = featureFolder.replaceName(
+          "{{package_name}}",
+          packageName
+        );
+        featureFolder = featureFolder.replaceName(
+          "{{root_folder}}",
+          rootFolder
+        );
 
+        featureFolder = featureFolder.replaceName(
+          "{{feature_name.lowerCase}}",
+          featureName
+        );
+        featureFolder = featureFolder.replaceName(
+          "{{custom_folder.lowerCase}}",
+          clickedFolder
+        );
+        featureFolder = featureFolder.replaceName(
+          "{{package_name.lowerCase}}",
+          packageName
+        );
+        featureFolder = featureFolder.replaceName(
+          "{{root_folder.lowerCase}}",
+          rootFolder
+        );
 
-          featureFolder = featureFolder.replaceName("{{feature_name.lowerCase}}", featureName)
-          .replaceName("{{custom_folder.lowerCase}}", clickedFolder)
-          .replaceName("{{package_name.lowerCase}}", packageName)
-          .replaceName("{{root_folder.lowerCase}}", rootFolder);
+        featureFolder = featureFolder.replaceName(
+          "{{feature_name.upperCase}}",
+          featureName
+        );
+        featureFolder = featureFolder.replaceName(
+          "{{custom_folder.upperCase}}",
+          clickedFolder
+        );
+        featureFolder = featureFolder.replaceName(
+          "{{package_name.upperCase}}",
+          packageName
+        );
+        featureFolder = featureFolder.replaceName(
+          "{{root_folder.upperCase}}",
+          rootFolder
+        );
 
-          featureFolder = featureFolder.replaceName("{{feature_name.upperCase}}", featureName)
-          .replaceName("{{custom_folder.upperCase}}", clickedFolder)
-          .replaceName("{{package_name.upperCase}}", packageName)
-          .replaceName("{{root_folder.upperCase}}", rootFolder);
-          
-          featureFolder = featureFolder.replaceName("{{feature_name.snakeCase}}", featureName)
-          .replaceName("{{custom_folder.snakeCase}}", clickedFolder)
-          .replaceName("{{package_name.snakeCase}}", packageName)
-          .replaceName("{{root_folder.snakeCase}}", rootFolder);
+        featureFolder = featureFolder.replaceName(
+          "{{feature_name.snakeCase}}",
+          featureName
+        );
+        featureFolder = featureFolder.replaceName(
+          "{{custom_folder.snakeCase}}",
+          clickedFolder
+        );
+        featureFolder = featureFolder.replaceName(
+          "{{package_name.snakeCase}}",
+          packageName
+        );
+        featureFolder = featureFolder.replaceName(
+          "{{root_folder.snakeCase}}",
+          rootFolder
+        );
 
-          featureFolder = featureFolder.replaceName("{{feature_name.pascalCase}}", featureName)
-          .replaceName("{{custom_folder.pascalCase}}", clickedFolder)
-          .replaceName("{{package_name.pascalCase}}", packageName)
-          .replaceName("{{root_folder.pascalCase}}", rootFolder);
+        featureFolder = featureFolder.replaceName(
+          "{{feature_name.pascalCase}}",
+          featureName
+        );
+        featureFolder = featureFolder.replaceName(
+          "{{custom_folder.pascalCase}}",
+          clickedFolder
+        );
+        featureFolder = featureFolder.replaceName(
+          "{{package_name.pascalCase}}",
+          packageName
+        );
+        featureFolder = featureFolder.replaceName(
+          "{{root_folder.pascalCase}}",
+          rootFolder
+        );
 
-          featureFolder = featureFolder.replaceName("{{feature_name.camelCase}}", featureName)
-          .replaceName("{{custom_folder.camelCase}}", clickedFolder)
-          .replaceName("{{package_name.camelCase}}", packageName)
-          .replaceName("{{root_folder.camelCase}}", rootFolder);
+        featureFolder = featureFolder.replaceName(
+          "{{feature_name.camelCase}}",
+          featureName
+        );
+        featureFolder = featureFolder.replaceName(
+          "{{custom_folder.camelCase}}",
+          clickedFolder
+        );
+        featureFolder = featureFolder.replaceName(
+          "{{package_name.camelCase}}",
+          packageName
+        );
+        featureFolder = featureFolder.replaceName(
+          "{{root_folder.camelCase}}",
+          rootFolder
+        );
 
         featureFolder = featureFolder.substring(
           0,
@@ -68,7 +138,7 @@ export async function createFolders(uri: Uri) {
         mkdirSync(featureFolder, { recursive: true });
       });
     } catch (err) {
-      console.log("Error", err);
+      window.showInformationMessage(`${err}`);
       throw err;
     }
   }
