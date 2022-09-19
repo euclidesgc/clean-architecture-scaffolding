@@ -1,7 +1,5 @@
 import { camelCase, pascalCase, snakeCase } from "change-case";
-import * as _ from "lodash";
 import { Uri, window, workspace } from "vscode";
-import { getPubspec } from "./get-pubspec";
 
 declare global {
   interface String {
@@ -50,9 +48,16 @@ export function getRootFolder(uri: Uri): string {
 
 export async function getPackageName(uri: Uri): Promise<string> {
   try {
-    const pubspec = await getPubspec(getRootFolder(uri));
-    const name = _.get(pubspec, "name", {});
-    return name;
+    // '/Users/colaborador/development/grupo_boticario/menu'
+
+    const rootFolder = getRootFolder(uri).split('/');
+    const packageName = rootFolder[rootFolder.length - 1];
+    return packageName;
+
+    // return getRootFolder(uri).substring(0, );
+    // const pubspec = await getPubspec(getRootFolder(uri));
+    // const name = _.get(pubspec, "name", {});
+    // return name;
   } catch (error) {
     window.showErrorMessage("Error load pubspec.yaml");
     return "";

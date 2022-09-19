@@ -77,4 +77,9 @@ In the next versions we will also add some file templates according to the conte
 ### 0.0.7
 - remove warnig messages.
 
+### 0.0.8
+- removing problematic access to pubspec.yaml
+
+
+
 **Enjoy!**
