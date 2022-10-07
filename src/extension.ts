@@ -2,7 +2,7 @@
 import * as fs from "fs";
 import * as vscode from "vscode";
 import { createFolders } from "./commands/create_folders";
-import { createUsecase } from "./commands/create_usecase";
+import { createUsecase, getTemplatesFile } from "./commands/create_usecase";
 
 export function activate(context: vscode.ExtensionContext) {
   vscode.commands.registerCommand(
@@ -18,12 +18,22 @@ export function activate(context: vscode.ExtensionContext) {
       if (await templatesOk(uri)) {
         await createUsecase(uri);
       } else {
-        vscode.window.showInformationMessage(
-          `Tip: Look for templates in github: https://github.com/euclidesgc/clean-architecture-scaffolding/tree/main/.my_templates`
+        const YES_NO = await vscode.window.showWarningMessage(
+          "The '.my_templates' folder was not found!\nDo you want to download some default templates as an example?\nPS: You can create your own examples using them as a base.",
+          "Yes",
+          "No"
         );
-        vscode.window.showErrorMessage(
-          "Verify your templates files in Extension config and /.my_templates folder. Maybe some name is wrong..."
-        );
+        if (YES_NO === "Yes") {
+          getTemplatesFile(uri);
+        } else {
+          vscode.window.showInformationMessage(
+            `Tip: Look for templates in github:\nhttps://github.com/euclidesgc/clean-architecture-scaffolding/tree/main/.my_templates`
+          );
+
+          vscode.window.showErrorMessage(
+            `It is not possible to continue without templates!`
+          );
+        }
       }
     }
   );
@@ -64,12 +74,7 @@ export function activate(context: vscode.ExtensionContext) {
     } else {
       return false;
     }
-
+    
     return true;
   }
-
-  // context.subscriptions.push(createNewFeature, createUseCase);
 }
-
-// this method is called when your extension is deactivated
-// export function deactivate() {}

@@ -1,5 +1,7 @@
 import { camelCase, pascalCase, snakeCase } from "change-case";
 import { Uri, window, workspace } from "vscode";
+import fs = require("fs");
+const axios = require("axios").default;
 
 declare global {
   interface String {
@@ -48,16 +50,9 @@ export function getRootFolder(uri: Uri): string {
 
 export async function getPackageName(uri: Uri): Promise<string> {
   try {
-    // '/Users/colaborador/development/grupo_boticario/menu'
-
-    const rootFolder = getRootFolder(uri).split('/');
+    const rootFolder = getRootFolder(uri).split("/");
     const packageName = rootFolder[rootFolder.length - 1];
     return packageName;
-
-    // return getRootFolder(uri).substring(0, );
-    // const pubspec = await getPubspec(getRootFolder(uri));
-    // const name = _.get(pubspec, "name", {});
-    // return name;
   } catch (error) {
     window.showErrorMessage("Error load pubspec.yaml");
     return "";
@@ -68,4 +63,13 @@ export async function getExtensionFileTemplates(): Promise<string> {
   return await workspace
     .getConfiguration("scaffolding")
     .get("layers.templates")!;
+}
+
+export async function donwloadTemplateFiles(file: string, url: string) {
+  const response = await axios({
+    method: "get",
+    url: url,
+    responseType: "stream",
+  });
+  await response.data.pipe(fs.createWriteStream(file));
 }
