@@ -1,6 +1,7 @@
 import { readFileSync, writeFile } from "fs";
 import { Uri, window } from "vscode";
 import * as utils from "../utils/tools";
+import fs = require("fs");
 
 export async function createUsecase(uri: Uri) {
   //Get the keywords values
@@ -252,4 +253,30 @@ function getFeatureName(
 
 function isFeature(item: string) {
   return item.includes("feature_name");
+}
+
+export async function getTemplatesFile(uri: Uri) {
+  const rootFolder = utils.getRootFolder(uri);
+  const defaultTemplateFolder = `${rootFolder}/.my_templates`;
+
+  if (!fs.existsSync(defaultTemplateFolder)) {
+    fs.mkdirSync(defaultTemplateFolder);
+  }
+
+  const templates = [
+    "https://raw.githubusercontent.com/euclidesgc/clean-architecture-scaffolding/main/.my_templates/default_templates/%7B%7Busecase_name.snakeCase%7D%7D_datasource.template",
+    "https://raw.githubusercontent.com/euclidesgc/clean-architecture-scaffolding/main/.my_templates/default_templates/%7B%7Busecase_name.snakeCase%7D%7D_datasource_impl.template",
+    "https://raw.githubusercontent.com/euclidesgc/clean-architecture-scaffolding/main/.my_templates/default_templates/%7B%7Busecase_name.snakeCase%7D%7D_repository.template",
+    "https://raw.githubusercontent.com/euclidesgc/clean-architecture-scaffolding/main/.my_templates/default_templates/%7B%7Busecase_name.snakeCase%7D%7D_repository_impl.template",
+    "https://raw.githubusercontent.com/euclidesgc/clean-architecture-scaffolding/main/.my_templates/default_templates/%7B%7Busecase_name.snakeCase%7D%7D_usecase.template",
+  ];
+
+  templates.forEach((url) => {
+    const file = url
+      .replaceAll("%7B", "{")
+      .replaceAll("%7D", "}")
+      .substring(url.lastIndexOf("/"), url.length);
+
+    utils.donwloadTemplateFiles(`${defaultTemplateFolder}${file}`, url);
+  });
 }
