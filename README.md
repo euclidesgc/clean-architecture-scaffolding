@@ -58,43 +58,18 @@ If you want to adapt the template, go to the extension settings and edit the jso
 - **{{usecase_name.pascalCase}}** to use a given usecase name with PascalCase pattern (indicate to Class names);<br/>
 - **{{usecase_name.camelCase}}**  to use a given usecase name with camelCase pattern (indicate to variables names).<br/>
 
-**Ex:** '{{custom_folder}}/{{feature_name}}/domain/usecases/{{usecase_name.snakeCase}}.template' 
+**Ex. 01 (Template file):** '{{custom_folder}}/{{feature_name}}/domain/usecases/{{usecase_name.snakeCase}}.template' 
+
+**Ex. 02 (Folder only):** '{{custom_folder}}/{{feature_name}}/domain/entities/' 
+> Attention: <br/>
+> End Folders only template with '/' or it will be ignored. <br/>
+> Remember, files do not always have an extension. ;)
 
 ![Using this folders templates](images/json.png)
 
 ## Extension Settings
 
 * `scaffolding.layers.templates`: Array of strings with folder template definitions.
-
-
-## Release Notes
-
-### 0.0.1
-- This initial version generates only the folders.
-In the next versions we will also add some file templates according to the context of the clicked folder.
-
-### 0.0.2
-- some bugs corrections
-
-### 0.0.3
-- Test flag removed;
-- introduce the .template files with a template of a dart class file using special keywords;
-  
-### 0.0.5
-- New special keyword "{{package_name}} added to help you with imports lines in templates file;
-- New templates files in repository.
-
-### 0.0.6
-- bugfix related to pubspec.yaml, mandatory to get the package name.
-
-### 0.0.7
-- remove warnig messages.
-
-### 0.0.8
-- removing problematic access to pubspec.yaml
-
-### 0.0.9
-- Dowload default templates from repository
 
 
 **Enjoy!**
