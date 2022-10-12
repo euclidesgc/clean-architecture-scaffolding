@@ -31,3 +31,6 @@ In the next versions we will also add some file templates according to the conte
 
 ### 0.0.10
 - Bugfix: The folders templates should ends withs '/'
+
+### 0.1.0
+- New Feature: Now you can use your own repository to get your templates. See the settings of this extension.

@@ -65,6 +65,24 @@ export async function getExtensionFileTemplates(): Promise<string> {
     .get("layers.templates")!;
 }
 
+export async function getRepoAuthor(): Promise<string> {
+  return await workspace
+    .getConfiguration("scaffolding")
+    .get("repository.author")!;
+}
+
+export async function getRepoName(): Promise<string> {
+  return await workspace
+    .getConfiguration("scaffolding")
+    .get("repository.repo")!;
+}
+
+export async function getRepoFolder(): Promise<string> {
+  return await workspace
+    .getConfiguration("scaffolding")
+    .get("repository.targetdir")!;
+}
+
 export async function donwloadTemplateFiles(file: string, url: string) {
   const response = await axios({
     method: "get",
