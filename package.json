@@ -55,6 +55,36 @@
             "markdownDescription": "#### You can use this special keywords to indicates some locations:\n- **{{package_name}}** to get name of your package in pubspec.yaml file;\n- **{{root_folder}}** to first folder of your projetc;\n- **{{custom_folder}}** to clicked folder;\n- **{{feature_name}}** to use the given custom name;\n- **{{usecase_name}}** to use a given usecase name;\n\n #### And you can associate this keywords with this format pattern too as given below:\n- **{{usecase_name.lowerCase}}** to use a given usecase name with lowercase pattern;\n- **{{usecase_name.upperCase}}** to use a given usecase name with UPPERCASE pattern;\n- **{{usecase_name.snakeCase}}** to use a given usecase name with snake_case pattern (indicate to file path names);\n- **{{usecase_name.pascalCase}}** to use a given usecase name with PascalCase pattern (indicate to Class names);\n- **{{usecase_name.camelCase}}**  to use a given usecase name with camelCase pattern (indicate to variables names).\n\n **Ex:** '{{root_folder}}/lib/src/{{feature_name}}/domain/entities'"
           }
         }
+      },
+      {
+        "title": "Clean Architecture Scaffolding",
+        "properties": {
+          "scaffolding.repository.author": {
+            "type": "string",
+            "default": "euclidesgc",
+            "markdownDescription": "The name of repository owner"
+          }
+        }
+      },
+      {
+        "title": "Clean Architecture Scaffolding",
+        "properties": {
+          "scaffolding.repository.repo": {
+            "type": "string",
+            "default": "clean-architecture-scaffolding",
+            "markdownDescription": "The repository name"
+          }
+        }
+      },
+      {
+        "title": "Clean Architecture Scaffolding",
+        "properties": {
+          "scaffolding.repository.targetdir": {
+            "type": "string",
+            "default": ".my_templates/default_templates/",
+            "markdownDescription": "The folder where your custom templates in"
+          }
+        }
       }
     ],
     "menus": {
@@ -110,6 +140,7 @@
   "dependencies": {
     "axios": "^1.1.0",
     "change-case": "^4.1.2",
+    "gh-retrieve": "^1.1.2",
     "lodash": "^4.17.21"
   }
 }

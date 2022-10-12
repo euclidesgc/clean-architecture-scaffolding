@@ -263,12 +263,26 @@ export async function getTemplatesFile(uri: Uri) {
     fs.mkdirSync(defaultTemplateFolder);
   }
 
+  const { recursiveDownload } = require("gh-retrieve");
+
+  recursiveDownload({
+    author: await utils.getRepoAuthor(), //repository owner
+    repo: await utils.getRepoName(), //repository name
+    targetdir: await utils.getRepoFolder(), //target directory to download
+    outdir: defaultTemplateFolder, //directory to download in
+  }).catch((err: { stack: any }) => {
+    console.log(err.stack);
+  });
+
+  const baseUrl =
+    "https://raw.githubusercontent.com/euclidesgc/clean-architecture-scaffolding/main/.my_templates/default_templates/";
+
   const templates = [
-    "https://raw.githubusercontent.com/euclidesgc/clean-architecture-scaffolding/main/.my_templates/default_templates/%7B%7Busecase_name.snakeCase%7D%7D_datasource.template",
-    "https://raw.githubusercontent.com/euclidesgc/clean-architecture-scaffolding/main/.my_templates/default_templates/%7B%7Busecase_name.snakeCase%7D%7D_datasource_impl.template",
-    "https://raw.githubusercontent.com/euclidesgc/clean-architecture-scaffolding/main/.my_templates/default_templates/%7B%7Busecase_name.snakeCase%7D%7D_repository.template",
-    "https://raw.githubusercontent.com/euclidesgc/clean-architecture-scaffolding/main/.my_templates/default_templates/%7B%7Busecase_name.snakeCase%7D%7D_repository_impl.template",
-    "https://raw.githubusercontent.com/euclidesgc/clean-architecture-scaffolding/main/.my_templates/default_templates/%7B%7Busecase_name.snakeCase%7D%7D_usecase.template",
+    `${baseUrl}%7B%7Busecase_name.snakeCase%7D%7D_datasource.template`,
+    `${baseUrl}%7B%7Busecase_name.snakeCase%7D%7D_datasource_impl.template`,
+    `${baseUrl}%7B%7Busecase_name.snakeCase%7D%7D_repository.template`,
+    `${baseUrl}%7B%7Busecase_name.snakeCase%7D%7D_repository_impl.template`,
+    `${baseUrl}%7B%7Busecase_name.snakeCase%7D%7D_usecase.template`,
   ];
 
   templates.forEach((url) => {

@@ -36,9 +36,9 @@ The source files will be created in accord with templates in folder ".my_templat
 You can write the template file using special keywords.<br/>
 Look this sample:<br/>
 ![Template file](images/template_file.png)<br/>
-#### Write your own templates and share with us:
-Search this repository for more templates.:<br/>
-https://github.com/euclidesgc/clean-architecture-scaffolding/tree/main/.my_templates
+
+#### Write your own templates and put in your repository. Use your template in any project. Just set with your repository properties:
+![Repo options](images/repo_options.png)<br/>
 
 ### Settings:
 If you want to adapt the template, go to the extension settings and edit the json with the templates.<br/>
